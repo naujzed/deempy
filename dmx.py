@@ -21,7 +21,7 @@ except ImportError:
 class LogListener:
 	
 	# opens files to write successful and failed downloads
-	def __init__(self,failedFile='failedDL.txt',successFile='Downloaded.txt'):
+	def __init__(self,failedFile,successFile):
 		self.lg = open(successFile, 'a', encoding='utf-8')
 		self.flg = open(failedFile, 'a', encoding='utf-8')
 		self.failed = 0
@@ -50,9 +50,9 @@ class LogListener:
 
 class DLR():
 	# protable:Bool - is the config folder in the current directory
-	def __init__(self, portable=None):
+	def __init__(self, portable=None,failedFile='failedDL.txt',successFile='Downloaded.txt'):
 		self.dz = Deezer()
-		self.listener = LogListener()
+		self.listener = LogListener(failedFile,successFile)
 		self.plugins = {}
 		self.downloadObjects = []
 
@@ -168,7 +168,7 @@ class DLR():
 
 
 if __name__ == '__main__':
-	tp = DLR(portable=None)
+	tp = DLR(portable=None,failedFile='failed.txt',successFile='succ.txt')
 	
 	tp.loadLinks(url=['https://www.deezer.com/en/track/1','https://www.deezer.com/en/track/2'], bitrate="320")
 	tp.loadLinks(filepath='downloadsflac.txt', bitrate="flac")
